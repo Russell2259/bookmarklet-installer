@@ -6,8 +6,8 @@
       href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+    
     <style>
-      
       code {
         border-radius: 5px;
       }
@@ -17,23 +17,36 @@
   <body>
     <h1>Bookmarklet Installer</h1>
     <p>An easy and simple bookmarklet installer!</p>
-    <p>Click and drag the link below into your bookmarks bar:</p>
-    <a id="link" href=""></a>
-    <hr>
-    <p>You can also install it manually:</p>
-    <pre>
-      <code id="code"></code>
-    </pre>
+    <div id="installer">
+      <p>Click and drag the link below into your bookmarks bar:</p>
+      <a id="link" href=""></a>
+      <hr>
+      <p>You can also install it manually:</p>
+      <pre>
+        <code id="code"></code>
+      </pre>
+    </div>
+    <br>
+    <br>
+    <p>Create a bookmarklet <a href="./create.html">here</a>.</p>
     
     <script>
       const params = new URLSearchParams(window.location.search);
-      var title = params.get("title") || "Bookmarklet"
-      var bookmarklet = params.get("bookmarklet")
+      var title = params.get("title") || "Bookmarklet";
+      var bookmarklet = params.get("bookmarklet");
       
-      document.getElementById("code").innerHTML = bookmarklet
-      document.getElementById("link").href = bookmarklet
-      document.getElementById("link").innerHTML = title
-      hljs.highlightAll();
+      if (bookmarklet) {
+        if (!bookmarklet.startsWIth('javascript:')) {
+            bookmarklet = 'javascript:' + bookmarklet;
+        }
+          
+        document.getElementById("code").innerHTML = bookmarklet;
+        document.getElementById("link").href = bookmarklet;
+        document.getElementById("link").innerHTML = title;
+        hljs.highlightAll();
+      } else {
+        document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>';
+      }
     </script>
   </body>
 </html>
