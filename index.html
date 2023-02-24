@@ -38,12 +38,15 @@
       if (bookmarklet) {
         if (!bookmarklet.startsWith('javascript:')) {
             bookmarklet = 'javascript:' + bookmarklet;
-        }
-          
-        document.getElementById("code").innerHTML = bookmarklet;
-        document.getElementById("link").href = bookmarklet;
-        document.getElementById("link").innerHTML = title;
-        hljs.highlightAll();
+            document.getElementById("code").innerHTML = bookmarklet;
+            document.getElementById("link").href = bookmarklet;
+            document.getElementById("link").innerHTML = title;
+            hljs.highlightAll();
+        } else {
+            document.getElementById("code").innerHTML = bookmarklet;
+            document.getElementById("link").href = bookmarklet;
+            document.getElementById("link").innerHTML = title;
+            hljs.highlightAll();}
       } else {
         document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>';
       }
