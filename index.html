@@ -36,7 +36,7 @@
       var bookmarklet = params.get("bookmarklet");
       
       if (bookmarklet) {
-        if (!bookmarklet.startsWIth('javascript:')) {
+        if (!bookmarklet.startsWith('javascript:')) {
             bookmarklet = 'javascript:' + bookmarklet;
         }
           
