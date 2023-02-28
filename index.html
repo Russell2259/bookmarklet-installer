@@ -46,7 +46,7 @@
               data = 'javascript:' + data;
             }
 
-            document.getElementById('code').innerHTML = data;
+            document.getElementById('code').textContent = data;
             document.getElementById('link').href = data;
             document.getElementById('link').innerHTML = `<button>${title}</button>`;
             hljs.highlightAll();
@@ -60,7 +60,7 @@
           bookmarklet = 'javascript:' + bookmarklet;
         }
 
-        document.getElementById('code').innerHTML = bookmarklet;
+        document.getElementById('code').textContent = bookmarklet;
         document.getElementById('link').href = bookmarklet;
         document.getElementById('link').innerHTML = `<button>${title}</button>`;
         hljs.highlightAll();
