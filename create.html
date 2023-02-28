@@ -10,22 +10,36 @@
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
 
     <title>Create A Bookmarklet | My Student Dashboard</title>
+
+    <style>
+        textarea {
+            resize: none;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Bookmarklet Creator</h1>
     <p>An easy and simple bookmarklet creator!</p>
-    <div>
+    <div id="content">
         <p>Enter your JS code below:</p>
-        <textarea id="data" name="bookmarklet-content" cols="30" rows="10" placeholder="Bookmarklet Code"></textarea>
-        <br>
+        <input type="text" id="name" placeholder="Bookmarklet name">
+        <textarea id="data" name="Bookmarklet" cols="30" rows="10" placeholder="Bookmarklet Code"></textarea>
         <br>
         <button id="generate" disabled>Generate</button>
     </div>
 
     <script>
         document.querySelector('#data').addEventListener('input', (e) => {
-            if (document.querySelector('#data').value) {
+            if (document.querySelector('#data').value && document.querySelector('#name').value) {
+                document.querySelector('#generate').disabled = false;
+            } else {
+                document.querySelector('#generate').disabled = true;
+            }
+        })
+
+        document.querySelector('#name').addEventListener('input', (e) => {
+            if (document.querySelector('#data').value && document.querySelector('#name').value) {
                 document.querySelector('#generate').disabled = false;
             } else {
                 document.querySelector('#generate').disabled = true;
@@ -33,7 +47,13 @@
         })
 
         document.querySelector('#generate').addEventListener('click', (e) => {
-            alert('yay!')
+            var bookmarkletData = document.querySelector('#data').value;
+
+            if (!bookmarkletData.startsWith('javascript:')) {
+                bookmarkletData = 'javascript:' + bookmarkletData;
+            }
+
+            alert(encodeURIComponent(bookmarkletData));
         })
     </script>
 </body>
