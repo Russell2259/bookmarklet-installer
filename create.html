@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+
     <title>Create A Bookmarklet | My Student Dashboard</title>
 </head>
+
 <body>
-    
+    <h1>Bookmarklet Creator</h1>
+    <p>An easy and simple bookmarklet creator!</p>
+    <div>
+        <p>Enter your JS code below:</p>
+        <textarea id="data" name="bookmarklet-content" cols="30" rows="10" placeholder="Bookmarklet Code"></textarea>
+        <br>
+        <br>
+        <button id="generate" disabled>Generate</button>
+    </div>
+
+    <script>
+        document.querySelector('#data').addEventListener('input', (e) => {
+            if (document.querySelector('#data').value) {
+                document.querySelector('#generate').disabled = false;
+            } else {
+                document.querySelector('#generate').disabled = true;
+            }
+        })
+
+        document.querySelector('#generate').addEventListener('click', (e) => {
+            alert('yay!')
+        })
+    </script>
 </body>
+
 </html>
