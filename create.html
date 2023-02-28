@@ -16,6 +16,10 @@
         textarea {
             resize: none;
         }
+
+        #err {
+            color: red;
+        }
     </style>
 </head>
 
@@ -23,6 +27,7 @@
     <h1>Bookmarklet Creator</h1>
     <p>An easy and simple bookmarklet creator!</p>
     <hr>
+    <p hidden id="err"></p>
     <div id="content">
         <p>Enter your JS code below:</p>
         <input type="text" id="name" placeholder="Bookmarklet name">
@@ -50,18 +55,29 @@
         })
 
         document.querySelector('#generate').addEventListener('click', (e) => {
+            var valid;
             var bookmarkletData = document.querySelector('#data').value;
 
             if (!bookmarkletData.startsWith('javascript:')) {
                 bookmarkletData = 'javascript:' + bookmarkletData;
             }
 
-            document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
-            hljs.highlightAll();
+            try {
+                valid = new Function(document.querySelector('#data').value);
+            } catch (e) {
+                document.querySelector('#err').textContent = 'Your javascript is invalid';
+                document.querySelector('#generate').disabled = true;
+                valid = undefined;
+            }
+
+            if (valid) {
+                document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
+                hljs.highlightAll();
+            }
         })
 
         window.onerror = (e) => {
-            document.querySelector('#content').innerHTML = `<br><p>Oops, it looks like an error occoured.</p><br><p style="color: red;">${e.toString()}</p>`;
+            document.querySelector('#content').innerHTML = `<br><p>Oops, it looks like an error occoured.</p><p style="color: red;">${e.toString()}</p>`;
         }
     </script>
 </body>
