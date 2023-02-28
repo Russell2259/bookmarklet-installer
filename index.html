@@ -67,6 +67,10 @@
     } else {
       document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>';
     }
+
+    window.onerror = (e) => {
+      document.querySelector('#installer').innerHTML = `<br><p>Oops, it looks like an error occoured.</p><br><p style="color: red;">${e.toString()}</p>`;
+    }
   </script>
 </body>
 

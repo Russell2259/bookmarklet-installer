@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
 
@@ -57,6 +58,10 @@
             document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
             hljs.highlightAll();
         })
+
+        window.onerror = (e) => {
+            document.querySelector('#content').innerHTML = `<br><p>Oops, it looks like an error occoured.</p><br><p style="color: red;">${e.toString()}</p>`;
+        }
     </script>
 </body>
 
