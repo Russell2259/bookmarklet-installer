@@ -36,15 +36,26 @@
     var bookmarklet = params.get('bookmarklet');
 
     if (bookmarklet) {
-      if (!bookmarklet.startsWith('javascript:')) {
-        bookmarklet = 'javascript:' + bookmarklet;
-        document.getElementById('code').innerHTML = bookmarklet;
-        document.getElementById('link').href = bookmarklet;
-        document.getElementById('link').innerHTML = title;
-        hljs.highlightAll();
+      if (bookmarklet.startsWith('https://') || bookmarklet.startsWith('http://') || bookmarklet.startsWith('//')) {
+        fetch(bookmarklet)
+          .then(res => res.text())
+          .then(data => {
+            if (!data.startsWith('javascript:')) {
+              data = 'javascript:' + data;
+            }
+
+            document.getElementById('code').innerHTML = data;
+            document.getElementById('link').href = data;
+            document.getElementById('link').innerHTML = title;
+            hljs.highlightAll();
+          }).catch(e => document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>')
       } else {
-        document.getElementById('code').innerHTML = bookmarklet;
-        document.getElementById('link').href = bookmarklet;
+        if (!bookmarklet.startsWith('javascript:')) {
+          bookmarklet = 'javascript:' + bookmarklet;
+        }
+
+        document.getElementById('code').innerHTML = data;
+        document.getElementById('link').href = data;
         document.getElementById('link').innerHTML = title;
         hljs.highlightAll();
       }
