@@ -63,14 +63,16 @@
             }
 
             try {
-                valid = new Function(document.querySelector('#data').value);
+                valid = eval(document.querySelector('#data').value);
             } catch (e) {
+                document.querySelector('#err').hidden = false;
                 document.querySelector('#err').textContent = 'Your javascript is invalid';
                 document.querySelector('#generate').disabled = true;
                 valid = undefined;
             }
 
             if (valid) {
+                document.querySelector('#err').hidden = true;
                 document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
                 hljs.highlightAll();
             }
