@@ -53,13 +53,13 @@
         if (!bookmarklet.startsWith('javascript:')) {
           bookmarklet = 'javascript:' + bookmarklet;
 
-          document.getElementById('code').innerHTML = data;
-          document.getElementById('link').href = data;
+          document.getElementById('code').innerHTML = bookmarklet;
+          document.getElementById('link').href = bookmarklet;
           document.getElementById('link').innerHTML = title;
           hljs.highlightAll();
         } else {
-          document.getElementById('code').innerHTML = data;
-          document.getElementById('link').href = data;
+          document.getElementById('code').innerHTML = bookmarklet;
+          document.getElementById('link').href = bookmarklet;
           document.getElementById('link').innerHTML = title;
           hljs.highlightAll();
         }

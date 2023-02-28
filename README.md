@@ -8,7 +8,7 @@ Bookmarklet Installer uses URL parameters. Example:
 
 `https://mystudentdashboard.github.io/bookmarklet-installer?bookmarklet=alert('hello!')&title=Hello alert`
 
-`https://mystudentdashboard.github.io/bookmarklet-installer?bookmarklet=https://mystudentdashboard.github.io/hello.js&title=Hello alert`
+`https://mystudentdashboard.github.io/bookmarklet-installer?bookmarklet=https://mystudentdashboard.github.io/bookmarklet-installer/hello.js&title=Hello alert`
 
 Usage:
 
