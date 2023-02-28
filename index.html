@@ -46,7 +46,7 @@
 
             document.getElementById('code').innerHTML = data;
             document.getElementById('link').href = data;
-            document.getElementById('link').innerHTML = title;
+            document.getElementById('link').innerHTML = `<button>${title}</button>`;
             hljs.highlightAll();
           }).catch(e => document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>')
       } else {
@@ -55,12 +55,12 @@
 
           document.getElementById('code').innerHTML = bookmarklet;
           document.getElementById('link').href = bookmarklet;
-          document.getElementById('link').innerHTML = title;
+          document.getElementById('link').innerHTML = `<button>${title}</button>`;
           hljs.highlightAll();
         } else {
           document.getElementById('code').innerHTML = bookmarklet;
           document.getElementById('link').href = bookmarklet;
-          document.getElementById('link').innerHTML = title;
+          document.getElementById('link').innerHTML = `<button>${title}</button>`;
           hljs.highlightAll();
         }
       }
