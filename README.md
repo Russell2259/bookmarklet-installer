@@ -10,6 +10,4 @@ Bookmarklet Installer uses URL parameters. Example:
 
 Usage:
 
-> `https://mystudentdashboard.github.io/bookmarklet-installer?bookmarklet=<bookmarklet>&title=<bookmarklet title>`
-
-The ability to write and create your own bookmarklets will be added soon.
+`https://mystudentdashboard.github.io/bookmarklet-installer?bookmarklet=<bookmarklet>&title=<bookmarklet title>`
