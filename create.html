@@ -24,6 +24,7 @@
     <div id="content">
         <p>Enter your JS code below:</p>
         <input type="text" id="name" placeholder="Bookmarklet name">
+        <br>
         <textarea id="data" name="Bookmarklet" cols="30" rows="10" placeholder="Bookmarklet Code"></textarea>
         <br>
         <button id="generate" disabled>Generate</button>
@@ -53,7 +54,9 @@
                 bookmarkletData = 'javascript:' + bookmarkletData;
             }
 
-            alert(encodeURIComponent(bookmarkletData));
+            bookmarkletData = encodeURIComponent(bookmarkletData);
+
+            document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><p>Install your bookmarklet <a href="./?bookmarklet=${bookmarkletData}&title=${document.querySelector('#name')}">here</a>.</p>`
         })
     </script>
 </body>
