@@ -63,12 +63,13 @@
             }
 
             try {
-                valid = eval(document.querySelector('#data').value);
+                new Function(document.querySelector('#data').value);
+                valid = true;
             } catch (e) {
                 document.querySelector('#err').hidden = false;
                 document.querySelector('#err').textContent = 'Your javascript is invalid';
                 document.querySelector('#generate').disabled = true;
-                valid = undefined;
+                valid = false;
             }
 
             if (valid) {
