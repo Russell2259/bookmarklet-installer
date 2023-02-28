@@ -74,7 +74,7 @@
 
             if (valid) {
                 document.querySelector('#err').hidden = true;
-                document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
+                document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><button onclick="navigator.clipboard.writeText(${bookmarkletData});">Copy</button><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
                 hljs.highlightAll();
             }
         })

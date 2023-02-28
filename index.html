@@ -25,6 +25,7 @@
     <pre>
       <code id="code"></code>
     </pre>
+    <button id="copy">Copy</button>
   </div>
   <br>
   <br>
@@ -48,21 +49,24 @@
             document.getElementById('link').href = data;
             document.getElementById('link').innerHTML = `<button>${title}</button>`;
             hljs.highlightAll();
+
+            document.querySelector('#copy').addEventListener('click', (e) => {
+              navigator.clipboard.writeText(data);
+            })
           }).catch(e => document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>')
       } else {
         if (!bookmarklet.startsWith('javascript:')) {
           bookmarklet = 'javascript:' + bookmarklet;
-
-          document.getElementById('code').innerHTML = bookmarklet;
-          document.getElementById('link').href = bookmarklet;
-          document.getElementById('link').innerHTML = `<button>${title}</button>`;
-          hljs.highlightAll();
-        } else {
-          document.getElementById('code').innerHTML = bookmarklet;
-          document.getElementById('link').href = bookmarklet;
-          document.getElementById('link').innerHTML = `<button>${title}</button>`;
-          hljs.highlightAll();
         }
+
+        document.getElementById('code').innerHTML = bookmarklet;
+        document.getElementById('link').href = bookmarklet;
+        document.getElementById('link').innerHTML = `<button>${title}</button>`;
+        hljs.highlightAll();
+
+        document.querySelector('#copy').addEventListener('click', (e) => {
+          navigator.clipboard.writeText(bookmarklet);
+        })
       }
     } else {
       document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>';
