@@ -56,7 +56,7 @@
 
             bookmarkletData = encodeURIComponent(bookmarkletData);
 
-            document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${bookmarkletData}&title=${document.querySelector('#name')}">here</a>.</p>`;
+            document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${decodeURIComponent(bookmarkletData)}</code></pre><br><p>Install your bookmarklet <a href="./?bookmarklet=${bookmarkletData}&title=${document.querySelector('#name')}">here</a>.</p>`;
             hljs.highlightAll();
         })
     </script>
