@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+
+    <title>Create a Bookmarklet</title>
+
+    <style>
+        textarea {
+            resize: none;
+        }
+
+        #err {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bookmarklet Creator</h1>
+    <p>An easy and simple bookmarklet creator!</p>
+    <hr>
+    <p hidden id="err"></p>
+    <div id="content">
+        <p>Enter your JS code below:</p>
+        <input type="text" id="name" placeholder="Bookmarklet name">
+        <br>
+        <textarea id="data" name="Bookmarklet" cols="30" rows="10" placeholder="Bookmarklet Code"></textarea>
+        <br>
+        <button id="generate" disabled>Generate</button>
+    </div>
+
+    <script>
+        document.querySelector('#data').addEventListener('input', (e) => {
+            if (document.querySelector('#data').value && document.querySelector('#name').value) {
+                document.querySelector('#generate').disabled = false;
+            } else {
+                document.querySelector('#generate').disabled = true;
+            }
+        })
+
+        document.querySelector('#name').addEventListener('input', (e) => {
+            if (document.querySelector('#data').value && document.querySelector('#name').value) {
+                document.querySelector('#generate').disabled = false;
+            } else {
+                document.querySelector('#generate').disabled = true;
+            }
+        })
+
+        document.querySelector('#generate').addEventListener('click', (e) => {
+            var valid;
+            var bookmarkletData = document.querySelector('#data').value;
+
+            if (!bookmarkletData.startsWith('javascript:')) {
+                bookmarkletData = 'javascript:' + bookmarkletData;
+            }
+
+            try {
+                new Function(document.querySelector('#data').value);
+                valid = true;
+            } catch (e) {
+                document.querySelector('#err').hidden = false;
+                document.querySelector('#err').textContent = 'Your javascript is invalid';
+                document.querySelector('#generate').disabled = true;
+                valid = false;
+            }
+
+            if (valid) {
+                document.querySelector('#err').hidden = true;
+                document.querySelector('#content').innerHTML = `<p>Here is your bookmarklet:</p><pre><code>${bookmarkletData}</code></pre><button onclick="navigator.clipboard.writeText(${bookmarkletData});">Copy</button><br><p>Install your bookmarklet <a href="./?bookmarklet=${encodeURIComponent(bookmarkletData)}&title=${document.querySelector('#name').value}">here</a>.</p>`;
+                hljs.highlightAll();
+            }
+        })
+
+        window.onerror = (e) => {
+            document.querySelector('#content').innerHTML = `<br><p>Oops, it looks like an error occoured.</p><p style="color: red;">${e.toString()}</p>`;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Bookmarklet Installer</title>
-    <link rel="stylesheet"
-      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
-    <style>
-      
-      code {
-        border-radius: 5px;
-      }
-    </style>
-  </head>
 
-  <body>
-    <h1>Bookmarklet Installer</h1>
-    <p>An easy and simple bookmarklet installer!</p>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+
+  <title>Bookmarklet Installer</title>
+
+  <style>
+    #err {
+      color: red;
+    }
+
+    pre {
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Bookmarklet Installer</h1>
+  <p>An easy and simple bookmarklet installer!</p>
+  <div id="installer">
     <p>Click and drag the link below into your bookmarks bar:</p>
     <a id="link" href=""></a>
     <hr>
@@ -24,16 +30,57 @@
     <pre>
       <code id="code"></code>
     </pre>
-    
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      var title = params.get("title") || "Bookmarklet"
-      var bookmarklet = params.get("bookmarklet")
-      
-      document.getElementById("code").innerHTML = bookmarklet
-      document.getElementById("link").href = bookmarklet
-      document.getElementById("link").innerHTML = title
-      hljs.highlightAll();
-    </script>
-  </body>
+    <button id="copy">Copy</button>
+  </div>
+  <br>
+  <br>
+  <p>Create a bookmarklet <a href="./create.html">here</a>.</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    var title = params.get('title') || 'Bookmarklet';
+    var bookmarklet = params.get('bookmarklet');
+
+    if (bookmarklet) {
+      if (bookmarklet.startsWith('https://') || bookmarklet.startsWith('http://') || bookmarklet.startsWith('//')) {
+        fetch(bookmarklet)
+          .then(res => res.text())
+          .then(data => {
+            if (!data.startsWith('javascript:')) {
+              data = 'javascript:' + data;
+            }
+
+            document.getElementById('code').textContent = data;
+            document.getElementById('link').href = data;
+            document.getElementById('link').innerHTML = `<button>${title}</button>`;
+            hljs.highlightAll();
+
+            document.querySelector('#copy').addEventListener('click', (e) => {
+              navigator.clipboard.writeText(data);
+            })
+          }).catch(e => document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>')
+      } else {
+        if (!bookmarklet.startsWith('javascript:')) {
+          bookmarklet = 'javascript:' + bookmarklet;
+        }
+
+        document.getElementById('code').textContent = bookmarklet;
+        document.getElementById('link').href = bookmarklet;
+        document.getElementById('link').innerHTML = `<button>${title}</button>`;
+        hljs.highlightAll();
+
+        document.querySelector('#copy').addEventListener('click', (e) => {
+          navigator.clipboard.writeText(bookmarklet);
+        })
+      }
+    } else {
+      document.querySelector('#installer').innerHTML = '<br><p>Oops, it looks like that is not a valid bookmarklet.</p>';
+    }
+
+    window.onerror = (e) => {
+      document.querySelector('#installer').innerHTML = `<br><p>Oops, it looks like an error occoured.</p><p style="color: red;">${e.toString()}</p>`;
+    }
+  </script>
+</body>
+
 </html>
